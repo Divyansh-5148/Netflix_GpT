@@ -3,7 +3,10 @@ import Header from './Header'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../utils/userSlice'
 const Login = () => {
+  const dispatch=useDispatch();
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
@@ -30,7 +33,8 @@ const Login = () => {
              const data= await res.json();
              console.log(data);
              if(!data.error){
-             
+             const {user} =data;
+             dispatch(addUser({user}));
                navigate("/browse");
              }
              else{
